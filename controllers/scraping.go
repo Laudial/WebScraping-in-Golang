@@ -12,9 +12,14 @@ func StartScraping(link string) {
 	c := colly.NewCollector()
 
 	// Définissez les sélecteurs pour extraire les données
-	c.OnHTML("h1", func(e *colly.HTMLElement) {
+	c.OnHTML("title", func(e *colly.HTMLElement) {
 		title := strings.TrimSpace(e.Text)
 		fmt.Println("Title:", title)
+	})
+
+	c.OnHTML("meta", func(e *colly.HTMLElement) {
+		meta := strings.TrimSpace(e.Attr("content"))
+		fmt.Println("Meta:", meta)
 	})
 
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
